@@ -20,7 +20,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     container:
-      image: wukan0621/sccenv
+      image: wukan0621/gpgpu-sim:docker-dependencies-cache
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,16 +34,16 @@ jobs:
           mv gpgpu-sim-modified.tar.gz spack-mirror/gpgpu-sim/
           . $SCC_SETUP_ENV
           spack mirror add --scope=site spack-mirror file://$(pwd)/spack-mirror
-          spack install -y rodinia%gcc@7.5.0 cuda_arch=70 cudart=shared ^ mesa~llvm gpgpu-sim@modified%gcc@7.5.0 ^ mesa~llvm
+          spack uninstall -y gpgpu-sim
+          spack install -y gpgpu-sim@modified%gcc@7.5.0 target=$(arch) ^ mesa~llvm
           spack mirror rm spack-mirror
-          spack load rodinia cudart=shared
           spack load gcc@7.5.0
           spack load gpgpu-sim
           cd $(spack location -i gpgpu-sim)/gpgpu-sim_distribution
           . setup_environment release
           cp -r $(spack location -i gpgpu-sim)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
           cd ~/SM7_QV100
-          LD_PRELOAD=$(spack location -i gpgpu-sim)/gpgpu-sim_distribution/lib/release/libcudart.so gaussian -f $(spack location -i rodinia)/data/gaussian/matrix3.txt > simulate.log
+          # LD_PRELOAD=$(spack location -i gpgpu-sim)/gpgpu-sim_distribution/lib/release/libcudart.so gaussian -f $(spack location -i rodinia)/data/gaussian/matrix3.txt > simulate.log
 
       - uses: actions/upload-artifact@v3
         with:
