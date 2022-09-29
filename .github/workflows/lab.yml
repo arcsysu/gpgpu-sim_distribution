@@ -40,7 +40,7 @@ jobs:
           spack load gcc@7.5.0
           spack load gpgpu-sim
           cd $(spack location -i gpgpu-sim)/gpgpu-sim_distribution
-          . setup_environment release
+          . ./setup_environment release
           cp -r $(spack location -i gpgpu-sim)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
           cd ~/SM7_QV100
           # LD_PRELOAD=$(spack location -i gpgpu-sim)/gpgpu-sim_distribution/lib/release/libcudart.so gaussian -f $(spack location -i rodinia)/data/gaussian/matrix3.txt > simulate.log
