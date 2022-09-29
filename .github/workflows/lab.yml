@@ -33,10 +33,10 @@ jobs:
           mkdir -p spack-mirror/gpgpu-sim
           mv gpgpu-sim-modified.tar.gz spack-mirror/gpgpu-sim/
           . $SCC_SETUP_ENV
-          spack mirror add --scope=site spack-mirror file://$(pwd)/spack-mirror
           spack uninstall -y gpgpu-sim
+          spack mirror add --scope=site gpgpu-sim file://$(pwd)/spack-mirror
           spack install -y --no-checksum gpgpu-sim@modified%gcc@7.5.0 target=$(arch) ^ mesa~llvm
-          spack mirror rm spack-mirror
+          spack mirror rm --scope=site gpgpu-sim
           spack load gcc@7.5.0
           spack load gpgpu-sim
           cd $(spack location -i gpgpu-sim)/gpgpu-sim_distribution
