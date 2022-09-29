@@ -33,7 +33,7 @@ jobs:
           mkdir -p spack-mirror/gpgpu-sim
           mv gpgpu-sim-modified.tar.gz spack-mirror/gpgpu-sim/
           . $SCC_SETUP_ENV
-          spack mirror add --scope=site spack-mirror spack-mirror
+          spack mirror add --scope=site spack-mirror file://$(pwd)/spack-mirror
           spack install -y rodinia%gcc@7.5.0 cuda_arch=70 cudart=shared ^ mesa~llvm gpgpu-sim@modified%gcc@7.5.0 ^ mesa~llvm
           spack mirror rm spack-mirror
           spack load rodinia cudart=shared
