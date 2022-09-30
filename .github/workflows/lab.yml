@@ -36,14 +36,14 @@ jobs:
           spack mirror add gpgpu-sim file://$(pwd)/spack-mirror
           spack install -y --no-checksum gpgpu-sim@modified%gcc@7.5.0 target=$(arch) ^ mesa+glx~llvm ^ cuda@11.0.3
           spack mirror rm gpgpu-sim
-          spack load gcc@7.5.0
-          spack load gpgpu-sim
+          spack load gcc@7.5.0 cuda
           nvcc --cudart shared -arch=sm_70 -o ~/lavaMD $(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution/test/lavaMD/lavaMD.cu
+          spack load gpgpu-sim
           cd $(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution
           . ./setup_environment release
           cp -r $(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
           cd ~/SM7_QV100
-          LD_PRELOAD=$(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution/lib/release/libcudart.so ~/lavaMD -boxes1d 10 1> stdout.log 2> stderr.log
+          LD_PRELOAD=$(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution/lib/release/libcudart.so ~/lavaMD -boxes1d 10  2> stderr.log | tee stdout.log
 
       - uses: actions/upload-artifact@v3
         with:

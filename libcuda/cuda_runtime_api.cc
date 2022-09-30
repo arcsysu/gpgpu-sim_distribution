@@ -472,7 +472,8 @@ static int get_app_cuda_version() {
   }
   fclose(cmd);
   if (app_cuda_version == 0) {
-    printf("Error - Cannot detect the app's CUDA version.\n");
+    printf("Error - Cannot detect the app's CUDA version.\n logs:\n%",
+           app_cuda_version_command.c_str());
     exit(1);
   }
   return app_cuda_version;
