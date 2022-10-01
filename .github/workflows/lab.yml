@@ -38,11 +38,11 @@ jobs:
           (spack load gcc@7.5.0 cuda &&
               nvcc --cudart shared -arch=sm_70 -o ~/lavaMD test/lavaMD/lavaMD.cu)
 
-          spack load gpgpu-sim
-          cd $(spack location -i gpgpu-sim)/gpgpu-sim_distribution
+          spack load gpgpu-sim@modified
+          cd $(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution
           . ./setup_environment release
           rm -rf ~/SM7_QV100
-          cp -r $(spack location -i gpgpu-sim)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
+          cp -r $(spack location -i gpgpu-sim@modified)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
           cd ~/SM7_QV100
           ~/lavaMD -boxes1d 3 2>stderr.log 1>stdout.log
 
