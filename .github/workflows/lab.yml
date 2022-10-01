@@ -40,7 +40,7 @@ jobs:
 
           spack load gpgpu-sim
           cd $(spack location -i gpgpu-sim)/gpgpu-sim_distribution
-          . setup_environment release
+          . ./setup_environment release
           rm -rf ~/SM7_QV100
           cp -r $(spack location -i gpgpu-sim)/gpgpu-sim_distribution/configs/tested-cfgs/SM7_QV100 ~
           cd ~/SM7_QV100
